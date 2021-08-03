@@ -1,5 +1,7 @@
-const FGC = {
-    names: ["Max", "Justin", "Yipes", "ApologyMan"],
-}
+import "./styles/index.scss";
 
-console.log(FGC);
+import { render } from "react-dom";
+
+import App from "./components/App";
+
+render(<App />, document.getElementById("root"));
