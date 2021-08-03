@@ -1,0 +1,4 @@
+- Usually don't want to include our dist folder in our git repo
+    - as in make sure to add it to the git ignore
+    - this is because we expect a fresh build each time
+        - we don't want to pull down previous builds
