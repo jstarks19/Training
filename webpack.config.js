@@ -1,9 +1,15 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLWebPackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 let mode = process.env.NODE_ENV === "production" ? "production" : "development";
 
 module.exports = {
   mode: mode,
+
+  output: {
+    assetModuleFilename: "images/[hash][ext][query]",
+  },
 
   devtool: false, // use "source-map" for our pre transpiled code to be available in the browser
 
@@ -23,12 +29,21 @@ module.exports = {
       },
       {
         test: /\.s?css/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [{ loader: MiniCssExtractPlugin.loader, options: { publicPath: "" } }, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|)$/i,
+        type: "asset/resource",
       },
     ],
   },
 
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new HTMLWebPackPlugin({
+      template: "./src/index.html",
+    }),
+  ],
 
   resolve: {
     extensions: [".js", ".jsx"],
@@ -36,5 +51,6 @@ module.exports = {
 
   output: {
     clean: true,
+    path: path.resolve(__dirname, "dist"),
   },
 };
